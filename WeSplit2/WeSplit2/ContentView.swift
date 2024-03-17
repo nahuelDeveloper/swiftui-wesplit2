@@ -17,14 +17,25 @@ struct ContentView: View {
     let currencyCode = Locale.current.currency?.identifier ?? "USD"
     
     var body: some View {
-        Form {
-            Section {
-                TextField("Amount", value: $checkAmount, format: .currency(code: currencyCode))
-                .keyboardType(.decimalPad)
-            }
-            Section {
-                    Text(checkAmount, format: .currency(code: currencyCode))
+        NavigationStack {
+            Form {
+                Section {
+                    TextField("Amount", value: $checkAmount, format: .currency(code: currencyCode))
+                    .keyboardType(.decimalPad)
                 }
+                Section {
+                        Text(checkAmount, format: .currency(code: currencyCode))
+                    }
+                Section {
+                    Picker("Number of people", selection: $numberOfPeople) {
+                        ForEach(2..<100) {
+                            Text("\($0) people")
+                        }
+                    }
+                    .pickerStyle(.navigationLink)
+                }
+            }
+            .navigationTitle("WeSplit")
         }
     }
 }
