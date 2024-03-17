@@ -16,6 +16,13 @@ struct ContentView: View {
     
     let currencyCode = Locale.current.currency?.identifier ?? "USD"
     
+    var totalPerPerson: Double {
+        let peopleCount = Double(numberOfPeople + 2)
+        let totalWithTip = checkAmount + (checkAmount * (Double(tipPercentage)/100.0))
+        
+        return totalWithTip / peopleCount
+    }
+    
     var body: some View {
         NavigationStack {
             Form {
@@ -24,7 +31,7 @@ struct ContentView: View {
                     .keyboardType(.decimalPad)
                 }
                 Section {
-                        Text(checkAmount, format: .currency(code: currencyCode))
+                        Text(totalPerPerson, format: .currency(code: currencyCode))
                     }
                 Section {
                     Picker("Number of people", selection: $numberOfPeople) {
